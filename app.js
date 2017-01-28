@@ -1,11 +1,8 @@
 document.querySelector('#conectar').addEventListener('click', function(event) {
   console.log("Clicou em conectar");
-  carBle.connect()
-  .then(() => {
-      return
-  })
+  carBle.conectar();
 })
 
 document.querySelector('#ligarFarol').addEventListener("click", function(event) {
-  carBle.ligarFarol()
+  carBle.ligarFarol();
 })

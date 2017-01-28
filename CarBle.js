@@ -15,7 +15,7 @@
     }
 
     conectar(){
-      let options = {filters:[{services:[SERVIDOR_GATT_UUID,SINALIZACAO_SERVICE_UUID,DIRECAO_SERVICE_UUID]}]};
+      let options = {filters:[{services:[SERVIDOR_GATT_UUID]}], optionalServices: [SINALIZACAO_SERVICE_UUID]};
       return navigator.bluetooth.requestDevice(options)
       .then(device => {
         this.device = device;
@@ -38,7 +38,7 @@
         return characteristic.writeValue(data);
       })
     }
-
+n
     atualizaDirecao(valor){
       return this.server.getPrimaryService(DIRECAO_SERVICE_UUID)
       .then(service => service.getCharacteristic(DIRECAO_CHAR_UUID))

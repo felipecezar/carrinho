@@ -38,19 +38,7 @@
         return characteristic.writeValue(data);
       })
     }
-    
-    atualizaDirecao(valor){
-      return this.server.getPrimaryService(DIRECAO_SERVICE_UUID)
-      .then(service => service.getCharacteristic(DIRECAO_CHAR_UUID))
-      .then(characteristic => {
 
-        console.log("Ligar Farol");
-
-        let data = new Uint8Array([valor]);
-
-        return characteristic.writeValue(data);
-      })
-    }
 
   }
 

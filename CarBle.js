@@ -38,7 +38,7 @@
         return characteristic.writeValue(data);
       })
     }
-n
+    
     atualizaDirecao(valor){
       return this.server.getPrimaryService(DIRECAO_SERVICE_UUID)
       .then(service => service.getCharacteristic(DIRECAO_CHAR_UUID))

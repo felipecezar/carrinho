@@ -3,5 +3,9 @@ document.querySelector('#conectar').addEventListener('click', function(event) {
 })
 
 document.querySelector('#ligarFarol').addEventListener("click", function(event) {
-  carBle.ligarFarol();
+  carBle.mudarFarol(1);
+})
+
+document.querySelector('#deliegarFarol').addEventListener("click", function(event) {
+  carBle.mudarFarol(0);
 })

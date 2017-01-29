@@ -6,6 +6,6 @@ document.querySelector('#ligarFarol').addEventListener("click", function(event) 
   carBle.mudarFarol(1);
 })
 
-document.querySelector('#deliegarFarol').addEventListener("click", function(event) {
+document.querySelector('#desligarFarol').addEventListener("click", function(event) {
   carBle.mudarFarol(0);
 })

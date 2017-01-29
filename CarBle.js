@@ -36,7 +36,7 @@
       return navigator.bluetooth.requestDevice(options)
       .then(device => {
           this.dispositivo = device;
-          console.log('> Encontrado ' + this.device.name);
+          console.log('> Encontrado ' + this.dispositivo.name);
           console.log('Conectando no servidor GATT...');
           return device.gatt.connect();
       })

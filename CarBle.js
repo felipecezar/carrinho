@@ -10,33 +10,71 @@
   class CarBle {
 
     constructor(){
-      this.device = null;
-      this.server = null;
+
+      this.dispositivo         = null;
+      this.servidorGATT        = null;
+      this.sinalizacaoServico  = null;
+      this.direcaocaoServico   = null;
+      this.farolCaracteristica = null;
+      this.anguloCaracteristica = null;
+
     }
 
     conectar(){
-      let options = {filters:[{services:[SERVIDOR_GATT_UUID]}], optionalServices: [SINALIZACAO_SERVICE_UUID]};
+
+      let options = { filters:[
+            {services:[SERVIDOR_GATT_UUID]},
+            {services:[SINALIZACAO_SERVICE_UUID]},
+            {services:[DIRECAO_SERVICE_UUID]}
+      ]};
+
       return navigator.bluetooth.requestDevice(options)
+
       .then(device => {
-        this.device = device;
-        return device.gatt.connect();
+          this.dispositivo = device;
+          console.log('> Encontrado ' + this.device.name);
+          console.log('Conectando no servidor GATT...');
+          return device.gatt.connect();
       })
+
       .then(server => {
-        this.server = server;
+          this.servidorGATT = server;
+          return this.servidorGATT.getPrimaryService(SINALIZACAO_SERVICE_UUID);
+      })
+
+      .then(service => {
+          console.log('> Encontrado o servico de sinalizacao.');
+          this.sinalizacaoServico = service;
+          return this.sinalizacaoServico.getCharacteristic(FAROL_CHAR_UUID);
+      })
+
+      .then(characteristic => {
+          console.log('> Encontrado a caracteristica do farol.');
+          this.farolCaracteristica = characteristic;
+      })
+
+      .then(() => {
+          return this.servidorGATT.getPrimaryService(DIRECAO_SERVICE_UUID)
+      })
+
+      .then(service => {
+          this.direcaocaoServico = service;
+          console.log('> Encontrado o servico de sinalizacao.');
+          return this.direcaocaoServico.getCharacteristic(DIRECAO_CHAR_UUID);
+      })
+
+      .then(characteristic => {
+        console.log('> Encontrada a caracteristica do angulo');
+        this.anguloCaracteristica = characteristic;
       });
+
     }
 
+
     ligarFarol(){
-      return this.server.getPrimaryService(SINALIZACAO_SERVICE_UUID)
-      .then(service => service.getCharacteristic(FAROL_CHAR_UUID))
-      .then(characteristic => {
-
-        console.log("Ligar Farol");
-
-        let data = new Uint8Array([1]);
-
-        return characteristic.writeValue(data);
-      })
+      console.log("Ligar Farol");
+      let data = new Uint8Array([1]);
+      return this.farolCaracteristica.writeValue(data);
     }
 
 
